@@ -7,21 +7,14 @@ const path = require('path');
 const Logo = require('../models/logoModel');
 
 
-router.post('/reset-users', async (req, res) => {
-	try {
-		await User.destroy({ where: {}, truncate: true });
-		res.json({ message: 'Users table truncated and auto-increment reset.' });
-	} catch (err) {
-		res.status(500).json({ message: 'Error resetting users table', error: err.message });
-	}
-});
+
 
 // Multer storage config for logo uploads
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		cb(null, path.join(__dirname, '../uploads'));
 	},
-		filename: function (req, file, cb) {
+		filename: function (req, file, cb) {   
 			// Accept only jpg, png, svg
 			const ext = path.extname(file.originalname).toLowerCase();
 			if (!['.jpg', '.jpeg', '.png', '.svg'].includes(ext)) {

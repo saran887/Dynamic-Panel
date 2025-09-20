@@ -19,7 +19,10 @@ app.use(bodyParser.json());
 const User = require('./models/userModel');
 const Logo = require('./models/logoModel');
 const Blog = require('./models/blogModel');
+const Category = require('./models/categoryModel');
+const Product = require('./models/productModel');
 const blogRoutes = require('./routes/blogRoutes');
+const productRoutes = require('./routes/productRoutes');
 
 async function resetAllIfNoUsers() {
   const userCount = await User.count();
@@ -46,9 +49,10 @@ sequelize.authenticate()
   .then(() => console.log('Database connected.'))
   .catch(err => console.error('Unable to connect to the database:', err));
 
-// Mount auth and blog routes
+// Mount auth, blog, and product routes
 app.use('/api/auth', authRoutes);
 app.use('/api/blog', blogRoutes);
+app.use('/api/product', productRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
